@@ -1,6 +1,9 @@
-from deep_translator import GoogleTranslator
+import detectlanguage
+import deepl
 
 
+
+detectlanguage.configuration.api_key = '194f8dc31ce4bf0b1460ece885aad7ba'
 text = '''
 1.
 Короткий опис:
@@ -119,5 +122,21 @@ ________________
 При натисканні на будь який з блоків на основній сторінці або при переході на розділи в головному меню для ознайомлення з певною інформацією користувача переводить на іншу сторінку, де йому доводиться скролити вниз, щоб знайти потрібну інформацію
 4149 4993 4425 6035    01 28
 '''
-text = GoogleTranslator(source='auto', target='uk').translate('Hi')
-print(text)
+# lang = single_detection(text=text, api_key='9c4b0dc9-8236-414b-8ce6-450f06d9622c:fx')
+lang = detectlanguage.simple_detect(text)
+print(lang)
+
+translator = deepl.Translator('9c4b0dc9-8236-414b-8ce6-450f06d9622c:fx')
+
+# for language in translator.get_source_languages():
+#     if str.upper(lang) in language.code:
+#         print('detected')
+
+# print("Target languages:")
+# for language in translator.get_target_languages():
+#     print(language)
+#
+# print('--------')
+# for lang in detectlanguage.languages():
+#     print(lang['code'] + ' ' + lang['name'])
+

@@ -1,0 +1,1 @@
+from .DeeplTranslatorService import DeeplTranslator
