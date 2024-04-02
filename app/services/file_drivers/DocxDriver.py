@@ -31,7 +31,4 @@ class DocxDriver(IDriver):
 
         # Extract text from all <w:t> elements in the document
         all_text = extract_text(root)
-        print(all_text + '1')
-        print(type(all_text))
-        print(len(all_text))
         return all_text

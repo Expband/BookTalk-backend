@@ -10,14 +10,19 @@ class FileHandler:
         self.__file_content_validator = FileContentValidator()
         self.__file_validator = FileValidator()
         self.__file_extension = str
+        self.__file_text = str
 
-
-
-    async def translate(self, file, target_lang: str = ''):
+    async def read(self, file):
         self.__file_extension = file.filename.split('.')[-1]
         await self.__file_validator.validate(self.__file_extension)
         driver = await self.__driver_factory.choose_file_driver(self.__file_extension)
-        file_text = await driver.read(file)
-        await self.__file_content_validator.validate(file_text)
-        translated_text = await self.__deepl.translate(file_text, target_lang)
+        self.__file_text = await driver.read(file)
+
+
+    async def translate(self, target_lang: str = '') -> str:
+        await self.__file_content_validator.validate(self.__file_text)
+        translated_text = await self.__deepl.translate(self.__file_text, target_lang)
         return translated_text
+
+    async def return_file_text(self):
+        return self.__file_text

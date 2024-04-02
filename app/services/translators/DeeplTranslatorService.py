@@ -8,7 +8,7 @@ class DeeplTranslator(ITranslator):
         super().__init__()
         self.__translator = deepl.Translator(auth_key='9c4b0dc9-8236-414b-8ce6-450f06d9622c:fx')
 
-    async def translate(self, text: str, target_lang: str) -> str:
+    async def translate(self, text, target_lang: str) -> str:
         translated_text = self.__translator.translate_text(text, target_lang=target_lang)
         return translated_text.text
 

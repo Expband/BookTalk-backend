@@ -15,11 +15,12 @@ router = APIRouter(prefix='/file',
 
 @router.post('/translate')
 async def translate_file(file: UploadFile = File(...), target_lang: str = Form(...)):
-    translated_text = await file_handler.translate(file, target_lang)
+    await file_handler.read(file)
+    translated_text = await file_handler.translate(target_lang)
     return {'translated_text': translated_text}
 
 
 @router.post('/voice')
 async def voice_file(file: UploadFile = File(...), target_lang: str = Form(...)):
-
+    await file_handler.read(file)
     pass
