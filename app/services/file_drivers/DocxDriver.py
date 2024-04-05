@@ -1,7 +1,7 @@
 import io
 import zipfile
 import xml.etree.ElementTree as ET
-from fastapi import File, UploadFile, HTTPException
+from fastapi import File, UploadFile
 from .IDriver import IDriver
 
 

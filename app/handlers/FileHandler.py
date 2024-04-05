@@ -1,6 +1,7 @@
 from app.factories import DriverFactory
 from app.services import DeeplTranslator
 from app.validators import FileContentValidator, FileValidator
+from fastapi import HTTPException
 
 
 class FileHandler:
@@ -14,13 +15,16 @@ class FileHandler:
 
     async def read(self, file):
         self.__file_extension = file.filename.split('.')[-1]
-        await self.__file_validator.validate(self.__file_extension)
         driver = await self.__driver_factory.choose_file_driver(self.__file_extension)
-        self.__file_text = await driver.read(file)
+        try:
+            self.__file_text = await driver.read(file)
+        except:
+            raise HTTPException(status_code=422, detail='Unable to process file content')
+
 
 
     async def translate(self, target_lang: str = '') -> str:
-        await self.__file_content_validator.validate(self.__file_text)
+        await self.__file_content_validator.content_validate(self.__file_text)
         translated_text = await self.__deepl.translate(self.__file_text, target_lang)
         return translated_text
 
